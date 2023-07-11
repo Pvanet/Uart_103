@@ -43,6 +43,7 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -112,7 +113,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
 	  	  	HAL_Delay(100);
 	  		if (temperTMP37>(settemperTMP37+hyster))  HAL_GPIO_WritePin(LED13_GPIO_Port, LED13_Pin, 0);
 	  		else if (temperTMP37<(settemperTMP37-hyster)) HAL_GPIO_WritePin(LED13_GPIO_Port, LED13_Pin, 1);
@@ -302,6 +302,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
       temperTMP37 = adcVoltage/20; // 1 градус = 20 милливольт
    	  snprintf(trans_str, 16, "TEMPERATURE %d\n", temperTMP37); //упаковали всё в массив для отображения в ASCII
       HAL_UART_Transmit(&huart1, trans_str, strlen (trans_str), 1000); //передали по уарт
+
   }
 }
 /* USER CODE END 4 */
